@@ -1,1 +1,1 @@
-Greetings rzCodec!
+============ Greetings rzCodec! ============
