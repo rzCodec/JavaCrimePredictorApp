@@ -1,4 +1,1 @@
-Hello World!
-Some more text!
-Master branch has lots of text now!
-Hahhahaha!
+Hello World! This is some text.
