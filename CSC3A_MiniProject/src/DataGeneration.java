@@ -3,30 +3,103 @@ import CustomDataStructures.CustomList;
 
 public class DataGeneration extends CrimeData
 {
+	private Random random = null;
 	private int iRandomCities;
 	private int[] iRandomArySuburbs = null;
 	//====================================
-	private String[] aryCity = {"Johannesburg", "Sandton", "Randburg", "Alberton"};
 	private CustomList<String> aryListCity;
+	private CustomList<String> aryListSuburb;
+	private CustomList<String> aryListCrimeType;
 	
 	public DataGeneration() 
+	{
+		random = new Random();
+		initialiseData();
+	}
+
+	//Helper methods
+	private void initialiseData()
 	{
 		aryListCity = new CustomList<String>();
 	    aryListCity.addLast("Johannesburg");
 	    aryListCity.addLast("Sandton");
-	    aryListCity.addLast("Randburg");
+	    aryListCity.addLast("Benoni");
 	    aryListCity.addLast("Alberton");
+	    
+	    aryListSuburb = new CustomList<String>();
+	    aryListSuburb.addLast("Rosebank");
+	    aryListSuburb.addLast("Parktown");
+	    aryListSuburb.addLast("Auckland Park");
+	    aryListSuburb.addLast("Houghton");
+	    aryListSuburb.addLast("Linden");
+	    aryListSuburb.addLast("Edenvale");
+	    aryListSuburb.addLast("Glenvista");
+	    aryListSuburb.addLast("Midrand");
+	    aryListSuburb.addLast("Fairvale");
+	    aryListSuburb.addLast("HoneyDew");
+	    aryListSuburb.addLast("Observatory");
+	    aryListSuburb.addLast("Parkwood");
+	    aryListSuburb.addLast("Maryvale");
+	    aryListSuburb.addLast("Corlett Gardens");
+	    
+	    aryListCrimeType = new CustomList<String>();
+	    aryListCrimeType.addLast("Homocide");
+	    aryListCrimeType.addLast("Snatch and Grab");
+	    aryListCrimeType.addLast("Robbery");
+	    aryListCrimeType.addLast("Attempted Break-In");
+	    aryListCrimeType.addLast("Domestic Violence");
+	    aryListCrimeType.addLast("Attempted Rape");
+	    aryListCrimeType.addLast("Extortion");
+	    aryListCrimeType.addLast("Double Homocide");
+	    aryListCrimeType.addLast("Blackmail");
+	    aryListCrimeType.addLast("Attempted Murder");
+	    		
+	    		
 	}
-
 	
-	public String generateRandomCity()
+	public String generateRandomRegion(String sRegionType)
 	{
-		Random random = new Random();
-		System.out.println(aryListCity.size());
-		int iSelector = random.nextInt((aryListCity.size())) + 0;
-		
-		return aryListCity.removeElementAt(iSelector);
+		if(sRegionType.equals("City"))
+		{
+			int iCitySelector = random.nextInt((aryListCity.size())) + 0;		
+			return aryListCity.removeElementAt(iCitySelector);
+		}
+		else
+		{
+			//System.out.println("ArrayList Size: " + aryListSuburb.size());
+			if(aryListSuburb.size() > 0)
+			{
+				int iSuburbSelector = random.nextInt((aryListSuburb.size())) + 0;		
+				return aryListSuburb.removeElementAt(iSuburbSelector);
+			}
+			else return "Hydepark";
+		}
 	}
+	
+	public String generateRandomCrime()
+	{
+		int iCrimeSelector = random.nextInt((aryListCrimeType.size())) + 0;		
+		return aryListCrimeType.get(iCrimeSelector);
+	}
+	
+	public void generateRandomDate()
+	{
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(0);
+		cal.set(2017, random.nextInt(12) + 0, random.nextInt(30) + 1, 22, 30, 15);
+		Date date = cal.getTime();
+		String tempDate = date.toString();
+		StringTokenizer ST = new StringTokenizer(tempDate);
+		super.setsDay(ST.nextToken());
+		super.setsMonth(ST.nextToken());
+		super.setsDate(ST.nextToken());
+		super.setiNumCrimesCommitted(random.nextInt(6) + 1);
+		super.setiStartTime(random.nextInt(24) + 0);
+		
+		System.out.println("Date is " + tempDate + "\n");
+	}
+	
 	
 	
 	public void generateBaseData()

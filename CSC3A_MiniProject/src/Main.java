@@ -18,13 +18,14 @@ public class Main {
 		System.out.println("Date is " + tempDate + "\n");
 		*/
 		
-		CustomList<String> stringList = new CustomList<String>();
+		CustomList<Integer> intList = new CustomList<Integer>();
+		intList.addFirst(5);
+		intList.addFirst(3);
 		
-		stringList.addLast("Bob"); //index 0
-		stringList.addLast("John"); //index 1
-		stringList.addLast("Tom"); //index 2
-		
-		System.out.println(stringList.removeElementAt(2));
+		for(int i : intList)
+		{
+			System.out.println(i);
+		}
 		
 		CustomList<Tree> myTreeList = new CustomList<Tree>();
 		
@@ -45,7 +46,9 @@ public class Main {
 		*/
 		
 		treeObj.populateTree();
+		treeObj.crunchCrimeStats();
 		treeObj.displayTreeContents();
+		System.out.println("Located Region : " + treeObj.searchTreeForSuburb("Rosebank").toString());
 		//treeObj.getRootProvinceNode().getChildrenNodeList().removeLast();
 		//treeObj.displayTreeContents();
 	}
@@ -59,7 +62,7 @@ public class Main {
 		
 		for(int i = 0; i < iRandomCities; i++)
 		{
-			iRandomArySuburbs[i] = random.nextInt(20) + 1;
+			iRandomArySuburbs[i] = random.nextInt(5) + 2;
 		}
 	}
 

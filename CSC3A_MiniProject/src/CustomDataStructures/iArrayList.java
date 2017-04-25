@@ -8,6 +8,7 @@ package CustomDataStructures;
 
 public interface iArrayList<T> 
 {
+	public void addArrayElements(T[] aryData);
 	public void addFirst(T Data);
 	public void addLast(T Data);
 	public void insertData(int iIndex, T Data);

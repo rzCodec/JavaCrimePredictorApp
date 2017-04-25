@@ -21,6 +21,19 @@ public class CustomList<T> implements iArrayList<T>, Iterable<T>
 	}
 	
 	/**
+     * Add an array of data to the list in one go
+     * @see iArrayList#removeLast()
+     */
+	@Override
+	public void addArrayElements(T[] aryData)
+	{
+		for(T elem : aryData)
+		{
+			nodeList.addFirst(elem);
+		}
+	}
+	
+	/**
      * Add data to the start of the list
      * @see iArrayList#removeLast()
      */
@@ -91,8 +104,6 @@ public class CustomList<T> implements iArrayList<T>, Iterable<T>
 	public T removeElementAt(int index)
 	{
 		cNode<T> getNode = nodeList.returnNode(index);
-		System.out.println("Node data is : " + getNode.getElement());
-		
 		return nodeList.removeAfterNode(getNode.getPrevLink()).getElement();
 	}
 	
