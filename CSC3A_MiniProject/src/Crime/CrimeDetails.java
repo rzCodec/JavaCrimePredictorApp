@@ -1,4 +1,4 @@
-
+package Crime;
 public class CrimeDetails 
 {
 	private String sCrimeType;

@@ -1,4 +1,4 @@
-
+package Crime;
 public class Stats 
 {
 	private int iTotalCrimes;

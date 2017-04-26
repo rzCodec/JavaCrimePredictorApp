@@ -2,6 +2,10 @@ import java.util.*;
 import CustomDataStructures.CustomList;
 import java.util.concurrent.ThreadLocalRandom;
 
+import javax.swing.JFrame;
+import graphicInterface.*;
+import CustomDataStructures.*;
+
 public class Main {
 
 	static int iRandomCities;
@@ -10,14 +14,6 @@ public class Main {
 	public static void main(String[] args)
 	{
 		/*
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(0);
-		cal.set(2017, 0, 15, 22, 30, 15);
-		Date date = cal.getTime();
-		String tempDate = date.toString();
-		System.out.println("Date is " + tempDate + "\n");
-		*/
-		
 		CustomList<Integer> intList = new CustomList<Integer>();
 		intList.addFirst(5);
 		intList.addFirst(3);
@@ -27,14 +23,14 @@ public class Main {
 			System.out.println(i);
 		}
 		
-		CustomList<Tree> myTreeList = new CustomList<Tree>();
+		CustomList<CrimeTree> myTreeList = new CustomList<CrimeTree>();
 		
 		generateBaseData();
-		Tree treeObj = new Tree("Gauteng", iRandomCities, iRandomArySuburbs);
+		CrimeTree treeObj = new CrimeTree("Gauteng", iRandomCities, iRandomArySuburbs);
 		myTreeList.addLast(treeObj);
 		treeObj.displayTreeContents();
 		
-		/*
+		
 		generateBaseData();
 		Tree treeObj2 = new Tree("Limpopo", iRandomCities, iRandomArySuburbs);
 		myTreeList.addLast(treeObj2);
@@ -43,14 +39,24 @@ public class Main {
 		{
 			tempTree.displayTreeContents();
 		}
-		*/
+		
 		
 		treeObj.populateTree();
 		treeObj.crunchCrimeStats();
 		treeObj.displayTreeContents();
 		System.out.println("Located Region : " + treeObj.searchTreeForSuburb("Rosebank").toString());
+		
 		//treeObj.getRootProvinceNode().getChildrenNodeList().removeLast();
 		//treeObj.displayTreeContents();
+		 */
+		
+		CustomFrame Frame = new CustomFrame();
+	    Frame.setVisible(true);
+	    Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    Frame.setLocationRelativeTo(null);
+	    Frame.setSize(800, 800);
+		
+		
 	}
 	
 	public static void generateBaseData()
