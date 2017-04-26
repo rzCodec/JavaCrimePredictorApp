@@ -1,0 +1,38 @@
+ Volume in drive C is Windows
+ Volume Serial Number is D03B-7002
+
+ Directory of C:\Users\Ronnie\Desktop\Computer_Science_3A\Github\MyWork
+
+2017-04-26  10:09 PM                 5 Another.txt
+2017-04-26  10:09 PM                45 Hello.txt
+2017-04-26  10:21 PM             1ÿ644 javaFiles.txt
+2017-04-26  10:09 PM                84 newfile.txt
+2017-04-26  10:09 PM                69 simulation.txt
+2017-04-26  10:09 PM                37 simulation2.txt
+2017-04-26  10:22 PM                 0 textFilesBruh.txt
+               7 File(s)          1ÿ884 bytes
+
+ Directory of C:\Users\Ronnie\Desktop\Computer_Science_3A\Github\MyWork\CSC3A_MiniProject\bin\data
+
+2017-04-26  10:09 PM                 0 suburbs.txt
+               1 File(s)              0 bytes
+
+ Directory of C:\Users\Ronnie\Desktop\Computer_Science_3A\Github\MyWork\CSC3A_MiniProject\src\data
+
+2017-04-26  10:09 PM                 0 suburbs.txt
+               1 File(s)              0 bytes
+
+ Directory of C:\Users\Ronnie\Desktop\Computer_Science_3A\Github\MyWork\folder1
+
+2017-04-26  10:09 PM               853 changelog.txt
+2017-04-26  10:09 PM                 2 ClassDiagram.txt
+               2 File(s)            855 bytes
+
+ Directory of C:\Users\Ronnie\Desktop\Computer_Science_3A\Github\MyWork\folder2
+
+2017-04-26  10:09 PM                 2 temp.txt
+               1 File(s)              2 bytes
+
+     Total Files Listed:
+              12 File(s)          2ÿ741 bytes
+               0 Dir(s)  87ÿ712ÿ526ÿ336 bytes free
