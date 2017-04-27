@@ -21,6 +21,19 @@ public class CustomList<T> implements iArrayList<T>, Iterable<T>
 	}
 	
 	/**
+     * Add an array list of data to the list in one go
+     * @see iArrayList#removeLast()
+     */
+	@Override
+	public void addListElements(CustomList<T> cusList)
+	{
+		for(T elem : cusList)
+		{
+			nodeList.addFirst(elem);
+		}
+	}
+	
+	/**
      * Add an array of data to the list in one go
      * @see iArrayList#removeLast()
      */

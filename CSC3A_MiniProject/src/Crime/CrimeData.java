@@ -6,6 +6,8 @@ import CustomDataStructures.CustomList;
 
 public class CrimeData 
 {
+	public final static int CRIMES_COMMITED = 8;
+	
 	private CustomList<CrimeDetails> crimeDetailsList;
 	protected String sRegion;
 	protected CustomList<String> sCrimeTypeList;  
@@ -20,10 +22,10 @@ public class CrimeData
 	private Boolean isCity = false;
 	private Boolean isSuburb = false;
 	
-	private Stats RegionStats;
+	//private Stats RegionStatsObj;
 	
 	private int iTotalCrimes;
-	private double dAverageCrimes;
+	private int iAverageCrimes;
 	private int iMaxCrimes;
 	private String sMaxCrimeRegion;
 	private int iLowestCrimes;
@@ -77,7 +79,7 @@ public class CrimeData
 	
 
 	public CrimeData(String sRegion, CustomList<String> sCrimeTypeList, String sDay, String sMonth, String sDate,
-			int iStartTime, int iNumCrimesCommitted, Stats statsObj)
+			int iStartTime, int iNumCrimesCommitted)
 	{
 		crimeDetailsList = new CustomList<CrimeDetails>();
 		this.sRegion = sRegion;
@@ -87,7 +89,6 @@ public class CrimeData
 		this.sDate = sDate;
 		this.iStartTime = iStartTime;
 		this.iNumCrimesCommitted = iNumCrimesCommitted;
-		this.RegionStats = statsObj;
 	}
 
 	//Setters and Getters
@@ -152,18 +153,20 @@ public class CrimeData
 		String sType = "";
 		String sMaxCrime = "";
 		String sMinCrime = "";
+		String sRegionStats = "";
 		
 		int iTotCrimes = 0;
 		if(isProvince == true) 
 		{
 			sType = "Province";
-			sMaxCrime = "\n Total Number Crimes is :" + iTotalCrimes;
+			iTotCrimes = iTotalCrimes;
 		}
 		else if(isCity == true)
 		{
 			sType = "City ";
 			iTotCrimes = iTotalCrimes;
 			sMaxCrime = "\n Highest Number of Crimes is :" + iMaxCrimes + " in " + sMaxCrimeRegion;
+			
 		}
 		else
 		{
@@ -171,8 +174,8 @@ public class CrimeData
 			iTotCrimes = crimeDetailsList.size(); 
 		}
 				
-		//return sRegion + "\n The total number of crimes in this " + sType + ": " + iTotCrimes + sMaxCrime + "\n " + sListOfCrimes;
-		return sRegion + "\n The total number of crimes in this " + sType + ": " + RegionStats.getiTotalCrimes() + sMaxCrime + "\n " + sListOfCrimes;
+		return sRegion + "\n The total number of crimes in this " + sType + ": " + iTotCrimes + sMaxCrime + "\n " + sListOfCrimes;
+		//return sRegion + "\n The total number of crimes in this " + sType + ": " + RegionStatsObj.getiTotalCrimes() + sMaxCrime + "\n " + sListOfCrimes;
 	}
 
 
@@ -242,15 +245,19 @@ public class CrimeData
 		this.iTotalCrimes = iTotalCrimes;
 	}
 
-	public double getdAverageCrimes() 
-	{
-		return dAverageCrimes;
+	
+
+	public int getiAverageCrimes() {
+		return iAverageCrimes;
 	}
 
-	public void setdAverageCrimes(double dAverageCrimes) 
-	{
-		this.dAverageCrimes = dAverageCrimes;
+
+
+	public void setiAverageCrimes(int iAverageCrimes) {
+		this.iAverageCrimes = iAverageCrimes;
 	}
+
+
 
 	public CustomList<String> getsCrimeTypeList() 
 	{
@@ -314,25 +321,5 @@ public class CrimeData
 
 	public void setsMinCrimeRegion(String sMinCrimeRegion) {
 		this.sMinCrimeRegion = sMinCrimeRegion;
-	}
-
-
-
-	/**
-	 * @return the regionStats
-	 */
-	public Stats getRegionStats() {
-		return RegionStats;
-	}
-
-
-
-	/**
-	 * @param regionStats the regionStats to set
-	 */
-	public void setRegionStats(Stats regionStats) {
-		RegionStats = regionStats;
-	}
-
-	
+	}	
 }

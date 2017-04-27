@@ -1,4 +1,9 @@
 package Crime;
+
+/*
+ * Created by Ronald Lai, 201433999
+ */
+
 public class Stats 
 {
 	private int iTotalCrimes;
@@ -6,13 +11,12 @@ public class Stats
 	private int iMaxCrimes;
 	private String sMaxCrimeRegion;
 	private int iThreshold;
+	private int iAvgTime; //The average time a crime will be commited
 	
 	public Stats()
 	{
 		
 	}
-	
-	
 	
 	public Stats(int iTotalCrimes, int dAverageCrimes, int iMaxCrimes, String sMaxCrimeRegion, int iThreshold) 
 	{
@@ -25,10 +29,6 @@ public class Stats
 
 
 
-	public int calcAvgCrime(int iTotalCrimes, int iCrimesPerRegion)
-	{
-		return iTotalCrimes / iCrimesPerRegion;
-	}
 	
 	//Getters and Setters
 
@@ -40,11 +40,11 @@ public class Stats
 		this.iTotalCrimes = iTotalCrimes;
 	}
 
-	public int getdAverageCrimes() {
+	public int getAverageCrimes() {
 		return dAverageCrimes;
 	}
 
-	public void setdAverageCrimes(int dAverageCrimes) {
+	public void setAverageCrimes(int dAverageCrimes) {
 		this.dAverageCrimes = dAverageCrimes;
 	}
 
@@ -75,8 +75,8 @@ public class Stats
 	@Override
 	public String toString() 
 	{
-		return "Statistics \n TotalCrimes :" + iTotalCrimes + ", \n AverageCrimes :" + dAverageCrimes + ", \n MaxCrimes :"
-				+ iMaxCrimes + ", \n MaxCrimeRegion :" + sMaxCrimeRegion + ", Threshold :" + iThreshold;
+		return "" + iTotalCrimes + ", \n Average Number of Crimes :" + dAverageCrimes + " \n Max Number of Crimes :"
+				+ iMaxCrimes + " \n MaxCrimeRegion :" + sMaxCrimeRegion + " \n Threshold :" + iThreshold;
 	}
 	
 	

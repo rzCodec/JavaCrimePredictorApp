@@ -52,11 +52,11 @@ public class Main {
 		
 		CustomFrame Frame = new CustomFrame();
 	    Frame.setVisible(true);
+	    Frame.pack();
 	    Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    Frame.setLocationRelativeTo(null);
-	    Frame.setSize(800, 800);
-		
-		
+	    Frame.setResizable(false);
+	    Frame.setSize(900, 800);
 	}
 	
 	public static void generateBaseData()

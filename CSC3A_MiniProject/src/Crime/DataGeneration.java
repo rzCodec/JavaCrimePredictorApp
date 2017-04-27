@@ -10,7 +10,7 @@ public class DataGeneration extends CrimeData
 	//====================================
 	private CustomList<String> aryListCity;
 	private CustomList<String> aryListSuburb;
-	private CustomList<String> aryListCrimeType;
+	public static CustomList<String> aryListCrimeType;
 	
 	public DataGeneration() 
 	{
@@ -26,6 +26,8 @@ public class DataGeneration extends CrimeData
 	    aryListCity.addLast("Sandton");
 	    aryListCity.addLast("Benoni");
 	    aryListCity.addLast("Alberton");
+	    aryListCity.addLast("Midrand");
+	    aryListCity.addLast("Pretoria");
 	    
 	    aryListSuburb = new CustomList<String>();
 	    aryListSuburb.addLast("Rosebank");
@@ -38,22 +40,26 @@ public class DataGeneration extends CrimeData
 	    aryListSuburb.addLast("Midrand");
 	    aryListSuburb.addLast("Fairvale");
 	    aryListSuburb.addLast("HoneyDew");
+	    aryListSuburb.addLast("Brooklyn");
 	    aryListSuburb.addLast("Observatory");
 	    aryListSuburb.addLast("Parkwood");
 	    aryListSuburb.addLast("Maryvale");
 	    aryListSuburb.addLast("Corlett Gardens");
+	    aryListSuburb.addLast("Arcadia");
 	    
 	    aryListCrimeType = new CustomList<String>();
 	    aryListCrimeType.addLast("Homocide");
 	    aryListCrimeType.addLast("Snatch and Grab");
 	    aryListCrimeType.addLast("Robbery");
+	    aryListCrimeType.addLast("Kidnapping");
 	    aryListCrimeType.addLast("Attempted Break-In");
 	    aryListCrimeType.addLast("Domestic Violence");
-	    aryListCrimeType.addLast("Attempted Rape");
+	    aryListCrimeType.addLast("Fraud");
 	    aryListCrimeType.addLast("Extortion");
 	    aryListCrimeType.addLast("Double Homocide");
 	    aryListCrimeType.addLast("Blackmail");
 	    aryListCrimeType.addLast("Attempted Murder");
+	    aryListCrimeType.addLast("Assault");
 	    		
 	    		
 	}
@@ -63,7 +69,7 @@ public class DataGeneration extends CrimeData
 		if(sRegionType.equals("City"))
 		{
 			int iCitySelector = random.nextInt((aryListCity.size())) + 0;		
-			return aryListCity.removeElementAt(iCitySelector);
+			return aryListCity.get(iCitySelector);
 		}
 		else
 		{
@@ -95,7 +101,7 @@ public class DataGeneration extends CrimeData
 		super.setsDay(ST.nextToken());
 		super.setsMonth(ST.nextToken());
 		super.setsDate(ST.nextToken());
-		super.setiNumCrimesCommitted(random.nextInt(6) + 1);
+		super.setiNumCrimesCommitted(random.nextInt(CrimeData.CRIMES_COMMITED) + 3);
 		super.setiStartTime(random.nextInt(24) + 0);
 		
 		System.out.println("Date is " + tempDate + "\n");
