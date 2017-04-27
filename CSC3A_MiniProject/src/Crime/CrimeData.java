@@ -133,11 +133,11 @@ public class CrimeData
 	{
 		String sTimeType = "";
 		String sListOfCrimes = "";
-
+        int iTempTime = 0;
 		
 		if(iStartTime >= 12)
 		{
-			iStartTime = iStartTime - 12;
+			iTempTime = iStartTime - 12;
 			sTimeType = "pm";
 		}
 		else sTimeType = "am";
@@ -321,5 +321,19 @@ public class CrimeData
 
 	public void setsMinCrimeRegion(String sMinCrimeRegion) {
 		this.sMinCrimeRegion = sMinCrimeRegion;
+	}
+
+
+
+	public CustomList<CrimeDetails> getCrimeDetailsList() {
+		return crimeDetailsList;
+	}
+
+
+
+	public void setCrimeDetailsList(CustomList<CrimeDetails> crimeDetailsList) {
+		this.crimeDetailsList = crimeDetailsList;
 	}	
+	
+	
 }

@@ -1,5 +1,6 @@
 package graphicInterface;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -10,9 +11,14 @@ import java.util.Random;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.Highlighter;
+import javax.swing.text.Highlighter.HighlightPainter;
 
 import Crime.CrimeData;
 import CustomDataStructures.CrimeTree;
+import javafx.scene.text.Font;
 
 
 public class CustomFrame extends JFrame implements ActionListener
@@ -38,8 +44,9 @@ public class CustomFrame extends JFrame implements ActionListener
 	    
 	    BasePanel.setLayout(new FlowLayout());
 	    btnGenerateStats = new JButton("Generate and View Statistics");
-	    btnGenerateStats.setPreferredSize(new Dimension(200, 100));
+	    btnGenerateStats.setPreferredSize(new Dimension(250, 100));
 	    btnGenerateStats.addActionListener(this);
+	    btnGenerateStats.setFont(btnGenerateStats.getFont().deriveFont(14.0f));
 	    //buttonPanel.add(btnGenerateStats);
 	    
 	    txtAreaDisplayStats = new JTextArea(30,75);
@@ -50,9 +57,8 @@ public class CustomFrame extends JFrame implements ActionListener
 	    JScrollPane scrollPane = new JScrollPane(txtAreaDisplayStats);
 	    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setPreferredSize(new Dimension(400, 675));
-	    
+	 
 	    //statsPanel.add(scrollPane);
-	    
 	    BasePanel.add(btnGenerateStats);
 	    BasePanel.add(scrollPane);
 	    add(BasePanel);

@@ -1,4 +1,6 @@
 package CustomDataStructures;
+import java.util.Random;
+
 import javax.swing.JTextArea;
 
 import Crime.*;
@@ -6,6 +8,7 @@ import Crime.*;
 public class CrimeTree 
 {
 	private int iNodes = 0;
+	private int iSuburbNodes = 0;
 	private int iNumCities = 0;
 	private int[] iArySuburbs = null;
 	private Node rootProvinceNode; 
@@ -48,6 +51,7 @@ public class CrimeTree
 				//An "upward" reference because the children have reference to its parent
 				Node suburbNode = new Node(cityNodeParent, null, suburbDataObj);
 				suburbNodeList.addLast(suburbNode);
+				iSuburbNodes += 1;
 				iNodes += 1;
 			}
 			
@@ -61,8 +65,6 @@ public class CrimeTree
 		}
 		
 		//I apply the same concept here
-		//rootProvinceNode.getCrimeDataObj().setRegionStatsObj(new Stats());
-		System.out.println(cityNodeList.size());
 		rootProvinceNode.setChildrenNodeList(cityNodeList);
 		rootProvinceNode.getCrimeDataObj().setIsProvince(true);
 	}
@@ -192,20 +194,91 @@ public class CrimeTree
     	return null;
     }
     
+    private boolean atDark(int iNight, int iDay)
+    {
+    	if(iNight > iDay) return true;
+    	else return false;
+    }
+    
+    private int calcPattern(int iTime)
+    {
+    	CustomList<Integer> timeList = new CustomList<Integer>();
+    	if((iTime >= 22) && (iTime <= 5))
+    	{
+    	
+    	}
+    	//Between 4pm and 6pm - Home time
+    	else if((iTime >= 16) && (iTime <= 18))
+    	{
+    		
+    	}
+    }
+    
+    //This function determines which times crime occurs such as bedtime, traffic time, or morning time
+    private void timePattern(int iTime, JTextArea txtStatsArea)
+    {
+    	//Between 10pm and 5am
+    	if((iTime >= 22) && (iTime <= 5))
+    	{
+    		txtStatsArea.append("Robbery, Attempted Murder, Fraud and Attempted Break-In is mostly likely to occur\n");  		
+    	    txtStatsArea.append("when sleeping or when returning home - Please be careful!");
+    	}
+    	//Between 4pm and 6pm - Home time
+    	else if((iTime >= 16) && (iTime <= 18))
+    	{
+    		txtStatsArea.append("Snatch and Grab, Assault, Fraud and Robbery have a high chance of occuring due to rush hour\n");
+    	}
+    }
+    
+    //Determines if the crimes occur at dark (5pm - 6am) or during the day
+    private boolean isNight(int iTime)
+    {
+    	if((iTime > 17) || (iTime < 6))  
+    	{
+    		return true;
+    	}
+    	else return false;
+    }
+    
+    //A function to calculate the average time a crime will takes place
+    private int calcAvgTime(int iTotalTime, int iNum)
+    {
+    	return iTotalTime  / iNum;
+    }
+    
+    //This function determines which crime has occurred the most in the entire province
+    //and also lists a summary of all the crimes
     private void detFreq(JTextArea txtStatsArea)
 	{		
+    	int iNightCount = 0;
+    	int iDayCount = 0;
+    	
     	//I get all the of crimes that been committed in all the suburbs of each city
     	CustomList<String> crimeList = new CustomList<String>();
     	for(Node cityNode : rootProvinceNode.getChildrenNodeList())
     	{
     		for(Node suburbNode : cityNode.getChildrenNodeList())
     		{
+    			System.out.println("Time is : " + suburbNode.getCrimeDataObj().getiStartTime());
+    			for(CrimeDetails cdObj: suburbNode.getCrimeDataObj().getCrimeDetailsList())
+    			{
+    				if(isNight(cdObj.getiStartTime())) iNightCount += 1;
+    				else iDayCount += 1;
+    			}
+    			
     			for(String sCrime : suburbNode.getCrimeDataObj().getsCrimeTypeList())
     			{
+    				
     				crimeList.addFirst(sCrime);
     			}	
     		}
     	}
+    	
+    	if(atDark(iNightCount, iDayCount) == true)
+    	{
+    		txtStatsArea.append("Crimes likely occur at night, please be careful, especially when going home! \n\n");
+    	}
+    	else txtStatsArea.append("Crimes usually occur during the day, be vigilant! \n\n");
     	
 		int count = 0;
 		
@@ -247,9 +320,7 @@ public class CrimeTree
 			txtStatsArea.append(fc.toString());
 		}
 		
-		txtStatsArea.append("Crime Type :" + sCrimeName + " occurred the most, " + iMaxFreq + " times in this province");
-		//System.out.println("Crime Type :" + sCrimeName + " occured " + iMaxFreq + " times in this province");
-		
+		txtStatsArea.append("Crime Type :" + sCrimeName + " occurred the most, " + iMaxFreq + " times in this province");			
 	}
 	
 	public void displayTreeContents(JTextArea txtStatsArea)

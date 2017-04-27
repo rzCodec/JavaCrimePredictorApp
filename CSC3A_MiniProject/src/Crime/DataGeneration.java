@@ -60,7 +60,7 @@ public class DataGeneration extends CrimeData
 	    aryListCrimeType.addLast("Blackmail");
 	    aryListCrimeType.addLast("Attempted Murder");
 	    aryListCrimeType.addLast("Assault");
-	    		
+	    aryListCrimeType.addLast("Hi-jack");
 	    		
 	}
 	
