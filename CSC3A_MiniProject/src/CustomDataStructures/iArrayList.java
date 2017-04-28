@@ -1,13 +1,12 @@
 package CustomDataStructures;
 
 /*
- *
- * @Author Mr R. Lai
+ * Created by Ronald Lai, 201433999
  */
-
 
 public interface iArrayList<T> 
 {
+	public void addListElements(CustomList<T> cusList);
 	public void addArrayElements(T[] aryData);
 	public void addFirst(T Data);
 	public void addLast(T Data);

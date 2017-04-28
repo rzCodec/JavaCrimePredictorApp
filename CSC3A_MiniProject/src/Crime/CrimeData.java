@@ -1,11 +1,16 @@
 package Crime;
-import java.util.HashMap;
-import java.util.StringTokenizer;
-
 import CustomDataStructures.CustomList;
+
+/*
+ * Created By Ronald Lai, 201433999
+ */
+
 
 public class CrimeData 
 {
+	public final static int CRIMES_COMMITED = 8;
+	
+	//Region details
 	private CustomList<CrimeDetails> crimeDetailsList;
 	protected String sRegion;
 	protected CustomList<String> sCrimeTypeList;  
@@ -16,14 +21,19 @@ public class CrimeData
 	protected int iStartTime;
 	protected int iNumCrimesCommitted;
 	
+	//Each node needs to be aware of what kind of region it is
 	private Boolean isProvince = false;
 	private Boolean isCity = false;
 	private Boolean isSuburb = false;
 	
-	private Stats RegionStats;
+	//Pattern variables that show information
+	private Boolean isCrimeOrganised;
+	private String sPatternCrime;
+	private int iPatternTime;
 	
+	//Simple statistics variables
 	private int iTotalCrimes;
-	private double dAverageCrimes;
+	private int iAverageCrimes;
 	private int iMaxCrimes;
 	private String sMaxCrimeRegion;
 	private int iLowestCrimes;
@@ -55,29 +65,23 @@ public class CrimeData
 		this.isCity = isCity;
 	}
 
-
-
-	public Boolean getIsSuburb() {
+	public Boolean getIsSuburb() 
+	{
 		return isSuburb;
 	}
 
-
-
-	public void setIsSuburb(Boolean isSuburb) {
+	public void setIsSuburb(Boolean isSuburb) 
+	{
 		this.isSuburb = isSuburb;
 	}
-
-
 
 	public CrimeData()
 	{
 	
 	}
 	
-	
-
 	public CrimeData(String sRegion, CustomList<String> sCrimeTypeList, String sDay, String sMonth, String sDate,
-			int iStartTime, int iNumCrimesCommitted, Stats statsObj)
+			int iStartTime, int iNumCrimesCommitted)
 	{
 		crimeDetailsList = new CustomList<CrimeDetails>();
 		this.sRegion = sRegion;
@@ -87,7 +91,6 @@ public class CrimeData
 		this.sDate = sDate;
 		this.iStartTime = iStartTime;
 		this.iNumCrimesCommitted = iNumCrimesCommitted;
-		this.RegionStats = statsObj;
 	}
 
 	//Setters and Getters
@@ -132,11 +135,11 @@ public class CrimeData
 	{
 		String sTimeType = "";
 		String sListOfCrimes = "";
-
+        int iTempTime = 0;
 		
 		if(iStartTime >= 12)
 		{
-			iStartTime = iStartTime - 12;
+			iTempTime = iStartTime - 12;
 			sTimeType = "pm";
 		}
 		else sTimeType = "am";
@@ -152,27 +155,42 @@ public class CrimeData
 		String sType = "";
 		String sMaxCrime = "";
 		String sMinCrime = "";
+		String sRegionStats = "";
 		
 		int iTotCrimes = 0;
 		if(isProvince == true) 
 		{
 			sType = "Province";
-			sMaxCrime = "\n Total Number Crimes is :" + iTotalCrimes;
+			iTotCrimes = iTotalCrimes;
 		}
 		else if(isCity == true)
 		{
 			sType = "City ";
 			iTotCrimes = iTotalCrimes;
-			sMaxCrime = "\n Highest Number of Crimes is :" + iMaxCrimes + " in " + sMaxCrimeRegion;
+			sMaxCrime = "\n Highest Number of Crimes is :" + iMaxCrimes + " in " + sMaxCrimeRegion;	
 		}
 		else
 		{
 			sType = "Suburb";
 			iTotCrimes = crimeDetailsList.size(); 
 		}
+		
+		String sDayType = "";
+		if(iPatternTime <= 12) 
+		{
+			sDayType = "am";
+		}
+		else 
+		{
+		    iPatternTime = iPatternTime - 12;
+			sDayType = "pm";
+		}
 				
-		//return sRegion + "\n The total number of crimes in this " + sType + ": " + iTotCrimes + sMaxCrime + "\n " + sListOfCrimes;
-		return sRegion + "\n The total number of crimes in this " + sType + ": " + RegionStats.getiTotalCrimes() + sMaxCrime + "\n " + sListOfCrimes;
+		return sRegion + "\n The total number of crimes in this " + sType + ": " 
+		+ iTotCrimes + sMaxCrime + "\n Likely Start Time :" + iPatternTime + sDayType + "\n\n Crime Patterns are: " 
+		+ sPatternCrime + "\n\n Crimes likely to be organised \n and planned in this area: " 
+		+ isCrimeOrganised + "\n " + sListOfCrimes;
+		
 	}
 
 
@@ -242,15 +260,19 @@ public class CrimeData
 		this.iTotalCrimes = iTotalCrimes;
 	}
 
-	public double getdAverageCrimes() 
-	{
-		return dAverageCrimes;
+	
+
+	public int getiAverageCrimes() {
+		return iAverageCrimes;
 	}
 
-	public void setdAverageCrimes(double dAverageCrimes) 
-	{
-		this.dAverageCrimes = dAverageCrimes;
+
+
+	public void setiAverageCrimes(int iAverageCrimes) {
+		this.iAverageCrimes = iAverageCrimes;
 	}
+
+
 
 	public CustomList<String> getsCrimeTypeList() 
 	{
@@ -264,37 +286,33 @@ public class CrimeData
 
 
 
-	public int getiMaxCrimes() {
+	public int getiMaxCrimes() 
+	{
 		return iMaxCrimes;
 	}
 
-
-
-	public void setiMaxCrimes(int iMaxCrimes) {
+	public void setiMaxCrimes(int iMaxCrimes)
+	{
 		this.iMaxCrimes = iMaxCrimes;
 	}
 
-
-
-	public int getiLowestCrimes() {
+	public int getiLowestCrimes() 
+	{
 		return iLowestCrimes;
 	}
 
-
-
-	public void setiLowestCrimes(int iLowestCrimes) {
+	public void setiLowestCrimes(int iLowestCrimes) 
+	{
 		this.iLowestCrimes = iLowestCrimes;
 	}
 
-
-
-	public String getsMaxCrimeRegion() {
+	public String getsMaxCrimeRegion() 
+	{
 		return sMaxCrimeRegion;
 	}
 
-
-
-	public void setsMaxCrimeRegion(String sMaxCrimeRegion) {
+	public void setsMaxCrimeRegion(String sMaxCrimeRegion) 
+	{
 		this.sMaxCrimeRegion = sMaxCrimeRegion;
 	}
 
@@ -304,35 +322,59 @@ public class CrimeData
 		this.sMaxCrimeRegion = sMaxRegion;
 	}
 
-
-
-	public String getsMinCrimeRegion() {
+	public String getsMinCrimeRegion()
+	{
 		return sMinCrimeRegion;
 	}
 
-
-
-	public void setsMinCrimeRegion(String sMinCrimeRegion) {
+	public void setsMinCrimeRegion(String sMinCrimeRegion) 
+	{
 		this.sMinCrimeRegion = sMinCrimeRegion;
 	}
 
 
 
-	/**
-	 * @return the regionStats
-	 */
-	public Stats getRegionStats() {
-		return RegionStats;
+	public CustomList<CrimeDetails> getCrimeDetailsList() 
+	{
+		return crimeDetailsList;
 	}
 
 
 
-	/**
-	 * @param regionStats the regionStats to set
-	 */
-	public void setRegionStats(Stats regionStats) {
-		RegionStats = regionStats;
+	public void setCrimeDetailsList(CustomList<CrimeDetails> crimeDetailsList) 
+	{
+		this.crimeDetailsList = crimeDetailsList;
 	}
 
+	public String getsPatternCrime()
+	{
+		return sPatternCrime;
+	}
+
+	public void setsPatternCrime(String sPatternCrime)
+	{
+		this.sPatternCrime = sPatternCrime;
+	}
+
+	public int getiPatternTime() 
+	{
+		return iPatternTime;
+	}
+
+	public void setiPatternTime(int sPatternTime) 
+	{
+		this.iPatternTime = sPatternTime;
+	}
+
+	public Boolean getIsCrimeOrganised() 
+	{
+		return isCrimeOrganised;
+	}
+
+	public void setIsCrimeOrganised(Boolean isCrimeOrganised) 
+	{
+		this.isCrimeOrganised = isCrimeOrganised;
+	}	
+	
 	
 }

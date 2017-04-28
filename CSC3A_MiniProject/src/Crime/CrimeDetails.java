@@ -1,4 +1,9 @@
 package Crime;
+
+/*
+ * Created By Ronald Lai, 201433999
+ */
+
 public class CrimeDetails 
 {
 	private String sCrimeType;
@@ -22,15 +27,16 @@ public class CrimeDetails
 	public String toString() 
 	{
 		String sTimeType = "";
+		int iTempTime = 0;
 		
 		if(iStartTime >= 12)
 		{
-			iStartTime = iStartTime - 12;
+			iTempTime = iStartTime - 12;
 			sTimeType = "pm";
 		}
 		else sTimeType = "am";
 		
-		return "\n CrimeDetails \n The Crime Type :" + sCrimeType + "\n StartTime :" + iStartTime + sTimeType + "\n Date :" + sDate + "\n Day :" + sDay + "\n Month :"
+		return "\n CrimeDetails \n The Crime Type :" + sCrimeType + "\n StartTime :" + iTempTime + sTimeType + "\n Date :" + sDate + "\n Day :" + sDay + "\n Month :"
 				+ sMonth + "\n" ;
 	}
 

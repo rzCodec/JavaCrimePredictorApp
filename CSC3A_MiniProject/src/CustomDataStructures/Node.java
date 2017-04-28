@@ -1,6 +1,10 @@
 package CustomDataStructures;
 import Crime.*;
 
+/*
+ * Created by Ronald Lai, 201433999
+ */
+
 public class Node
 {
 	private Node nodeParent;
