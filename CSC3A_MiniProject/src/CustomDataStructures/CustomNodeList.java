@@ -4,8 +4,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /*
- *
- * @Author Mr R. Lai
+ * Created by Ronald Lai, 201433999
  */
 
 public class CustomNodeList<T> implements iNode<T>, Iterable<T>, Cloneable

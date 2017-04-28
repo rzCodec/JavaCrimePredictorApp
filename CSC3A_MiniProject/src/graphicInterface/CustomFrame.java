@@ -1,34 +1,23 @@
 package graphicInterface;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
 import javax.swing.*;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.DefaultHighlighter;
-import javax.swing.text.Highlighter;
-import javax.swing.text.Highlighter.HighlightPainter;
-
 import Crime.CrimeData;
 import CustomDataStructures.CrimeTree;
-import javafx.scene.text.Font;
 
+/*
+ * Created by Ronald Lai, 201433999
+ */
 
 public class CustomFrame extends JFrame implements ActionListener
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3644110547115789312L;
-
-	private JPanel panelObj;	
+	
 	private JTextArea txtAreaDisplayStats;
 	private JScrollPane scrollPane;
 	private JButton btnGenerateStats;
@@ -39,17 +28,14 @@ public class CustomFrame extends JFrame implements ActionListener
 		setTitle("Crime Patterns in 2017");
 		createCrimeTree();
 		JPanel BasePanel = new JPanel();
-	    JPanel buttonPanel = new JPanel();
-	    JPanel statsPanel = new JPanel();
 	    
 	    BasePanel.setLayout(new FlowLayout());
 	    btnGenerateStats = new JButton("Generate and View Statistics");
 	    btnGenerateStats.setPreferredSize(new Dimension(250, 100));
 	    btnGenerateStats.addActionListener(this);
 	    btnGenerateStats.setFont(btnGenerateStats.getFont().deriveFont(14.0f));
-	    //buttonPanel.add(btnGenerateStats);
 	    
-	    txtAreaDisplayStats = new JTextArea(30,75);
+	    txtAreaDisplayStats = new JTextArea(50,75);
 	    txtAreaDisplayStats.setLineWrap(true);
 	    txtAreaDisplayStats.setWrapStyleWord(true);
 	    txtAreaDisplayStats.setFont(txtAreaDisplayStats.getFont().deriveFont(16.0f));

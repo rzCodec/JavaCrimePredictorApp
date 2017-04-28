@@ -5,6 +5,9 @@ import javax.swing.JTextArea;
 
 import Crime.*;
 
+/*
+ * Created By Ronald Lai, 201433999
+ */
 public class CrimeTree 
 {
 	private int iNodes = 0;
@@ -100,9 +103,7 @@ public class CrimeTree
 				cdObj.makeCrimeList();
 				suburbNode.setCrimeDataObj(cdObj);
 			} //end for each suburb loop
-		}//end for each city loop
-		
-		
+		}//end for each city loop	
 	}
 	
 	//A function to calculate the different statistics
@@ -137,9 +138,10 @@ public class CrimeTree
 					suburbNode.getNodeParent().getCrimeDataObj().setsMaxCrimeRegion(sCrimeRegion);
 				}
 			}
+			//Calcuate the average crimes per city by diving the total crimes across all cities and suburbs by the # of citites
 			int iAvgCrimesPerCity = calcAvgCrimes(iTotalNumCrimes, cityNode.getChildrenNodeList().size());
 			cityNode.getCrimeDataObj().setiAverageCrimes(iAvgCrimesPerCity);
-			iGrandTotal += cityNode.getCrimeDataObj().getiTotalCrimes(); //The total crimes that occured for Gauteng
+			iGrandTotal += cityNode.getCrimeDataObj().getiTotalCrimes(); //The total crimes that occurred for Gauteng
 			iTotalNumCrimes = 0;
 		}
 		
@@ -150,16 +152,15 @@ public class CrimeTree
 		for(Node cityNode : rootProvinceNode.getChildrenNodeList())
 		{
 			iCityCrime = cityNode.getCrimeDataObj().getiTotalCrimes();
-			System.out.println("# Crimes" + iCityCrime);
+			//System.out.println("# Crimes" + iCityCrime);
 			if(iMaxCities <= iCityCrime)
 			{
 				iMaxCities = cityNode.getCrimeDataObj().getiTotalCrimes();
 				sMaxCity = cityNode.getCrimeDataObj().getsRegion();
-				System.out.println("City " + sMaxCity);
+				//System.out.println("City " + sMaxCity);
 			}
 		}
-		
-		
+	
 		rootProvinceNode.getCrimeDataObj().setiTotalCrimes(iGrandTotal);
 		int iProvinceAvgCrimes = calcAvgCrime(iGrandTotal, rootProvinceNode.getChildrenNodeList().size());
 		rootProvinceNode.getCrimeDataObj().setiAverageCrimes(iProvinceAvgCrimes);
@@ -194,42 +195,18 @@ public class CrimeTree
     	return null;
     }
     
+    /**
+     * Determines if crime usually occurs at night or during the day.
+     * @param iNight
+     * @param iDay
+     * @return
+     */
     private boolean atDark(int iNight, int iDay)
     {
     	if(iNight > iDay) return true;
     	else return false;
     }
-    
-    private int calcPattern(int iTime)
-    {
-    	CustomList<Integer> timeList = new CustomList<Integer>();
-    	if((iTime >= 22) && (iTime <= 5))
-    	{
-    	
-    	}
-    	//Between 4pm and 6pm - Home time
-    	else if((iTime >= 16) && (iTime <= 18))
-    	{
-    		
-    	}
-    }
-    
-    //This function determines which times crime occurs such as bedtime, traffic time, or morning time
-    private void timePattern(int iTime, JTextArea txtStatsArea)
-    {
-    	//Between 10pm and 5am
-    	if((iTime >= 22) && (iTime <= 5))
-    	{
-    		txtStatsArea.append("Robbery, Attempted Murder, Fraud and Attempted Break-In is mostly likely to occur\n");  		
-    	    txtStatsArea.append("when sleeping or when returning home - Please be careful!");
-    	}
-    	//Between 4pm and 6pm - Home time
-    	else if((iTime >= 16) && (iTime <= 18))
-    	{
-    		txtStatsArea.append("Snatch and Grab, Assault, Fraud and Robbery have a high chance of occuring due to rush hour\n");
-    	}
-    }
-    
+   
     //Determines if the crimes occur at dark (5pm - 6am) or during the day
     private boolean isNight(int iTime)
     {
@@ -240,14 +217,13 @@ public class CrimeTree
     	else return false;
     }
     
-    //A function to calculate the average time a crime will takes place
-    private int calcAvgTime(int iTotalTime, int iNum)
-    {
-    	return iTotalTime  / iNum;
-    }
-    
-    //This function determines which crime has occurred the most in the entire province
-    //and also lists a summary of all the crimes
+    /**
+     * This function determines which type of crime has occurred the most in the entire province
+     * It also determines if crimes are planned or not based on the standard deviation of the start times of the crimes
+     * It also lists a summary of all the crimes
+     * @param txtStatsArea
+     */
+  
     private void detFreq(JTextArea txtStatsArea)
 	{		
     	int iNightCount = 0;
@@ -255,24 +231,48 @@ public class CrimeTree
     	
     	//I get all the of crimes that been committed in all the suburbs of each city
     	CustomList<String> crimeList = new CustomList<String>();
+    	CrimePattern crimePatternObj = new CrimePattern();
+    	
     	for(Node cityNode : rootProvinceNode.getChildrenNodeList())
     	{
+    		CustomList<Integer> suburbTimeList = new CustomList<Integer>();
     		for(Node suburbNode : cityNode.getChildrenNodeList())
     		{
-    			System.out.println("Time is : " + suburbNode.getCrimeDataObj().getiStartTime());
+    			//System.out.println("Time is : " + suburbNode.getCrimeDataObj().getiStartTime());
+    			CustomList<Integer> timeList = 	new CustomList<Integer>();
+    			
     			for(CrimeDetails cdObj: suburbNode.getCrimeDataObj().getCrimeDetailsList())
     			{
+    				timeList.addFirst(cdObj.getiStartTime());
     				if(isNight(cdObj.getiStartTime())) iNightCount += 1;
     				else iDayCount += 1;
     			}
     			
+    			int iAvgTime = crimePatternObj.calcAvgTime(timeList);
+    			double stdDeviation = crimePatternObj.calcStandardDeviation(timeList, iAvgTime);	
+    			suburbNode.getCrimeDataObj().setIsCrimeOrganised(crimePatternObj.isOrganisedCrime(stdDeviation, iAvgTime));
+    			
+    			int iCommonTime = (int) (((int) iAvgTime * 0.5) + (stdDeviation));
+    			String sCrimePattern = crimePatternObj.findCrimePattern(iCommonTime);
+    			suburbNode.getCrimeDataObj().setiPatternTime(iCommonTime);
+    			suburbNode.getCrimeDataObj().setsPatternCrime(sCrimePattern);
+    			suburbTimeList.addFirst(iCommonTime);
+    			
+    			//Get each crime type from the suburb
     			for(String sCrime : suburbNode.getCrimeDataObj().getsCrimeTypeList())
     			{
-    				
     				crimeList.addFirst(sCrime);
-    			}	
-    		}
-    	}
+    			} // end for each crime type
+    		} // end for each suburb node
+    		
+    		int iCityAvgTime = crimePatternObj.calcAvgTime(suburbTimeList);
+			double cityStdDeviation = crimePatternObj.calcStandardDeviation(suburbTimeList, iCityAvgTime);
+			int iCommonTime = (int) (((int) iCityAvgTime * 0.25) + (cityStdDeviation));
+			cityNode.getCrimeDataObj().setiPatternTime(iCommonTime);
+			cityNode.getCrimeDataObj().setsPatternCrime(crimePatternObj.findCrimePattern(iCommonTime));
+			cityNode.getCrimeDataObj().setIsCrimeOrganised(crimePatternObj.isOrganisedCrime(cityStdDeviation, iCityAvgTime));
+			
+    	} // end for each city node
     	
     	if(atDark(iNightCount, iDayCount) == true)
     	{
@@ -331,7 +331,6 @@ public class CrimeTree
 		txtStatsArea.append("Average Number of Crimes Per City :" + rootProvinceNode.getCrimeDataObj().getiAverageCrimes() + "\n");
 		String sMaxCrimeRegion = rootProvinceNode.getCrimeDataObj().getsMaxCrimeRegion();
 		txtStatsArea.append("Highest Number of Crimes :" + rootProvinceNode.getCrimeDataObj().getiMaxCrimes() + " in " + sMaxCrimeRegion + "\n \n");
-		
 		txtStatsArea.append("\nCrime Frequency for Gauteng \n\n");
 		detFreq(txtStatsArea);	
 		
@@ -340,7 +339,6 @@ public class CrimeTree
 			if(cityNode != null)
 			{
 				txtStatsArea.append("\n\n === City === " + cityNode.getCrimeDataObj().toString() + "Total Number of Suburbs :" + cityNode.getChildrenNodeList().size() + "\n");
-				//txtStatsArea.append(" Number of Suburbs : " + cityNode.getChildrenNodeList().size() + "\n");
 				txtStatsArea.append(" Average number of crimes per suburb is : " + cityNode.getCrimeDataObj().getiAverageCrimes() + "\n \n");
 				txtStatsArea.append("\n");
 				
@@ -353,11 +351,14 @@ public class CrimeTree
 		
 		}
 		txtStatsArea.setCaretPosition(0);
-	
-			
-		
 	}
 	
+	/**
+	 * Calculate average crimes for a region
+	 * @param iTotCrimes
+	 * @param iNum
+	 * @return
+	 */
 	private int calcAvgCrimes(int iTotCrimes, int iNum)
 	{
 		return iTotCrimes / iNum;

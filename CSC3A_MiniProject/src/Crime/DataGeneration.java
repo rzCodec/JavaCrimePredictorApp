@@ -2,6 +2,10 @@ package Crime;
 import java.util.*;
 import CustomDataStructures.CustomList;
 
+/*
+ * Created By Ronald Lai, 201433999
+ */
+
 public class DataGeneration extends CrimeData
 {
 	private Random random = null;
@@ -103,12 +107,8 @@ public class DataGeneration extends CrimeData
 		super.setsDate(ST.nextToken());
 		super.setiNumCrimesCommitted(random.nextInt(CrimeData.CRIMES_COMMITED) + 3);
 		super.setiStartTime(random.nextInt(24) + 0);
-		
-		System.out.println("Date is " + tempDate + "\n");
 	}
-	
-	
-	
+
 	public void generateBaseData()
 	{
 		Random random = new Random();

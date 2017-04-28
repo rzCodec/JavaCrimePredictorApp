@@ -3,10 +3,8 @@ package CustomDataStructures;
 import java.util.Iterator;
 
 /*
- *
- * @Author Mr R. Lai
+ * Created by Ronald Lai, 201433999
  */
-
 
 public class CustomList<T> implements iArrayList<T>, Iterable<T>
 {
