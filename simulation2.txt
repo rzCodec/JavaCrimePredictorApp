@@ -1,1 +1,3 @@
 Commit #1
+My Changes w/o Commit #2
+Change Change and then some...
