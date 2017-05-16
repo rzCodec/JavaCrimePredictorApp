@@ -1,2 +1,3 @@
 Commit #1
-Commit #2
+Working w/o commit #2
+Made some changes
