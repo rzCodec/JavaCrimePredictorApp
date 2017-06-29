@@ -1,8 +1,1 @@
-Commit #1
-<<<<<<< HEAD
-Working w/o commit #2
-Made some changes
-=======
-Commit #2
-Commit #3
->>>>>>> 3d1c2d22f3098701bb6fc106a75c273253a5a3e9
+Revising git commands
