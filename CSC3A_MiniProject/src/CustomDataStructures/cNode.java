@@ -1,6 +1,6 @@
 package CustomDataStructures;
 /*
- * @Author Mr R. Lai
+ * Created by Ronald Lai, 201433999
  */
 
 public class cNode<T> implements iPosition<T>

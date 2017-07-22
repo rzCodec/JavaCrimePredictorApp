@@ -3,10 +3,8 @@ package CustomDataStructures;
 import java.util.Iterator;
 
 /*
- *
- * @Author Mr R. Lai
+ * Created by Ronald Lai, 201433999
  */
-
 
 public class CustomList<T> implements iArrayList<T>, Iterable<T>
 {
@@ -18,6 +16,32 @@ public class CustomList<T> implements iArrayList<T>, Iterable<T>
 	public CustomList()
 	{
 		nodeList = new CustomNodeList<T>();
+	}
+	
+	/**
+     * Add an array list of data to the list in one go
+     * @see iArrayList#removeLast()
+     */
+	@Override
+	public void addListElements(CustomList<T> cusList)
+	{
+		for(T elem : cusList)
+		{
+			nodeList.addFirst(elem);
+		}
+	}
+	
+	/**
+     * Add an array of data to the list in one go
+     * @see iArrayList#removeLast()
+     */
+	@Override
+	public void addArrayElements(T[] aryData)
+	{
+		for(T elem : aryData)
+		{
+			nodeList.addFirst(elem);
+		}
 	}
 	
 	/**
@@ -91,8 +115,6 @@ public class CustomList<T> implements iArrayList<T>, Iterable<T>
 	public T removeElementAt(int index)
 	{
 		cNode<T> getNode = nodeList.returnNode(index);
-		System.out.println("Node data is : " + getNode.getElement());
-		
 		return nodeList.removeAfterNode(getNode.getPrevLink()).getElement();
 	}
 	
