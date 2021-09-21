@@ -4,16 +4,14 @@ package Crime;
  * Created By Ronald Lai, 201433999
  */
 
-public class CrimeDetails 
-{
+public class CrimeDetails {
 	private String sCrimeType;
 	private int iStartTime;
 	private String sDay;
 	private String sMonth;
 	private String sDate;
 	
-	public CrimeDetails(String sCrimeType, int iStartTime, String sDay, String sMonth, String sDate)
-	{
+	public CrimeDetails(String sCrimeType, int iStartTime, String sDay, String sMonth, String sDate) {
 		this.sCrimeType = sCrimeType;
 		this.iStartTime = iStartTime;
 		this.sDay = sDay;
@@ -21,16 +19,12 @@ public class CrimeDetails
 		this.sDate = sDate;
 	}
 	
-	
-
 	@Override
-	public String toString() 
-	{
+	public String toString() {
 		String sTimeType = "";
 		int iTempTime = 0;
 		
-		if(iStartTime >= 12)
-		{
+		if(iStartTime >= 12) {
 			iTempTime = iStartTime - 12;
 			sTimeType = "pm";
 		}
@@ -39,9 +33,7 @@ public class CrimeDetails
 		return "\n CrimeDetails \n The Crime Type :" + sCrimeType + "\n StartTime :" + iTempTime + sTimeType + "\n Date :" + sDate + "\n Day :" + sDay + "\n Month :"
 				+ sMonth + "\n" ;
 	}
-
-
-
+	
 	public String getsCrimeType() {
 		return sCrimeType;
 	}
@@ -81,9 +73,4 @@ public class CrimeDetails
 	public void setsDate(String sDate) {
 		this.sDate = sDate;
 	}
-	
-	
-	
-	
-
 }
