@@ -2,30 +2,21 @@ package Crime;
 import java.util.*;
 import CustomDataStructures.CustomList;
 
-/*
- * Created By Ronald Lai, 201433999
- */
-
-public class DataGeneration extends CrimeData
-{
+public class DataGeneration extends CrimeData {
 	private Random random = null;
 	private int iRandomCities;
 	private int[] iRandomArySuburbs = null;
-	//====================================
 	private CustomList<String> aryListCity;
 	private CustomList<String> aryListSuburb;
 	public static CustomList<String> aryListCrimeType;
 	
-	public DataGeneration() 
-	{
+	public DataGeneration() {
 		random = new Random();
 		initialiseData();
 	}
 
-	//Helper methods
-	private void initialiseData()
-	{
-		aryListCity = new CustomList<String>();
+	private void initialiseData(){
+	    aryListCity = new CustomList<String>();
 	    aryListCity.addLast("Johannesburg");
 	    aryListCity.addLast("Sandton");
 	    aryListCity.addLast("Benoni");
@@ -68,18 +59,15 @@ public class DataGeneration extends CrimeData
 	    		
 	}
 	
-	public String generateRandomRegion(String sRegionType)
-	{
-		if(sRegionType.equals("City"))
-		{
+	public String generateRandomRegion(String sRegionType){
+		if(sRegionType.equals("City")){
 			int iCitySelector = random.nextInt((aryListCity.size())) + 0;		
 			return aryListCity.get(iCitySelector);
 		}
 		else
 		{
 			//System.out.println("ArrayList Size: " + aryListSuburb.size());
-			if(aryListSuburb.size() > 0)
-			{
+			if(aryListSuburb.size() > 0){
 				int iSuburbSelector = random.nextInt((aryListSuburb.size())) + 0;		
 				return aryListSuburb.removeElementAt(iSuburbSelector);
 			}
@@ -87,15 +75,12 @@ public class DataGeneration extends CrimeData
 		}
 	}
 	
-	public String generateRandomCrime()
-	{
+	public String generateRandomCrime(){
 		int iCrimeSelector = random.nextInt((aryListCrimeType.size())) + 0;		
 		return aryListCrimeType.get(iCrimeSelector);
 	}
 	
-	public void generateRandomDate()
-	{
-		
+	public void generateRandomDate(){	
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(0);
 		cal.set(2017, random.nextInt(12) + 0, random.nextInt(30) + 1, 22, 30, 15);
@@ -109,8 +94,7 @@ public class DataGeneration extends CrimeData
 		super.setiStartTime(random.nextInt(24) + 0);
 	}
 
-	public void generateBaseData()
-	{
+	public void generateBaseData(){
 		Random random = new Random();
 		this.iRandomCities = random.nextInt(4) + 1;
 		iRandomArySuburbs = new int[this.iRandomCities];
@@ -121,30 +105,19 @@ public class DataGeneration extends CrimeData
 		}
 	}
 
-	//Getters and Setters
-	public int getiRandomCities() 
-	{
+	public int getiRandomCities() {
 		return iRandomCities;
 	}
 
-	public void setiRandomCities(int iRandomCities) 
-	{
+	public void setiRandomCities(int iRandomCities) {
 		this.iRandomCities = iRandomCities;
 	}
 
-	public int[] getiRandomArySuburbs() 
-	{
+	public int[] getiRandomArySuburbs() {
 		return iRandomArySuburbs;
 	}
 
-	public void setiRandomArySuburbs(int[] iRandomArySuburbs) 
-	{
+	public void setiRandomArySuburbs(int[] iRandomArySuburbs) {
 		this.iRandomArySuburbs = iRandomArySuburbs;
-	}
-
-	
-	
-	
-	
-	
+	}	
 }
