@@ -1,24 +1,19 @@
 package Crime;
-
-/*
- * Created By Ronald Lai, 201433999
- */
-
 public class CrimeFrequency {
-	private String sCrimeType;
+	private String crime;
 	private int iFreq;
 
 	public CrimeFrequency(String sName, int iFreq) {
-		this.sCrimeType = sName;
+		this.crime = sName;
 		this.iFreq = iFreq;
 	}
 	
 	public String getsCrimeType() {
-		return sCrimeType;
+		return crime;
 	}
 
-	public void setsCrimeType(String sCrimeType) {
-		this.sCrimeType = sCrimeType;
+	public void setsCrimeType(String crime) {
+		this.crime = crime;
 	}
 
 	public int getiFreq() {
@@ -31,6 +26,6 @@ public class CrimeFrequency {
 	
 	@Override
 	public String toString() {
-		return "Crime Type :" + sCrimeType + " :: Frequency :" + iFreq + "\n";
+		return "Crime Type :" + crime + " :: Frequency :" + iFreq + "\n";
 	}
 }
