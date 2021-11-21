@@ -1,36 +1,24 @@
 package Crime;
 
-/*
- * Created by Ronald Lai, 201433999
- */
-
-public class Stats 
-{
+public class Stats {
 	private int iTotalCrimes;
 	private int dAverageCrimes;
 	private int iMaxCrimes;
 	private String sMaxCrimeRegion;
 	private int iThreshold;
-	private int iAvgTime; //The average time a crime will be commited
+	private int iAvgTime; 
 	
-	public Stats()
-	{
+	public Stats(){
 		
 	}
 	
-	public Stats(int iTotalCrimes, int dAverageCrimes, int iMaxCrimes, String sMaxCrimeRegion, int iThreshold) 
-	{
+	public Stats(int iTotalCrimes, int dAverageCrimes, int iMaxCrimes, String sMaxCrimeRegion, int iThreshold) {
 		this.iTotalCrimes = iTotalCrimes;
 		this.dAverageCrimes = dAverageCrimes;
 		this.iMaxCrimes = iMaxCrimes;
 		this.sMaxCrimeRegion = sMaxCrimeRegion;
 		this.iThreshold = iThreshold;
 	}
-
-
-
-	
-	//Getters and Setters
 
 	public int getiTotalCrimes() {
 		return iTotalCrimes;
@@ -73,13 +61,8 @@ public class Stats
 	}
 
 	@Override
-	public String toString() 
-	{
+	public String toString() {
 		return "" + iTotalCrimes + ", \n Average Number of Crimes :" + dAverageCrimes + " \n Max Number of Crimes :"
 				+ iMaxCrimes + " \n MaxCrimeRegion :" + sMaxCrimeRegion + " \n Threshold :" + iThreshold;
 	}
-	
-	
-	
-
 }
