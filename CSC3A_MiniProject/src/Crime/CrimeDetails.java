@@ -25,7 +25,6 @@ public class CrimeDetails {
 			sTimeType = "pm";
 		}
 		else sTimeType = "am";
-		
 		return "\n CrimeDetails \n The Crime Type :" + sCrimeType + "\n StartTime :" + iTempTime + sTimeType + "\n Date :" + sDate + "\n Day :" + sDay + "\n Month :"
 				+ sMonth + "\n" ;
 	}
