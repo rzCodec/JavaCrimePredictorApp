@@ -1,9 +1,5 @@
 package Crime;
 
-/*
- * Created By Ronald Lai, 201433999
- */
-
 public class CrimeDetails {
 	private String sCrimeType;
 	private int iStartTime;
