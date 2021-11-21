@@ -117,8 +117,7 @@ public class CustomList<T> implements iArrayList<T>, Iterable<T> {
 			 */
 			@Override
 			public boolean hasNext() {
-				if(!(nodeList.isEmpty())) //If the list contains something...
-				{
+				if(!(nodeList.isEmpty())) {
 					if(iIndex < nodeList.getSize()) return true; //If the current is more than the size of the list, it does not have a next element
 					else return false;
 				}
@@ -141,8 +140,7 @@ public class CustomList<T> implements iArrayList<T>, Iterable<T> {
 					T currentElement = null;
 					cNode<T> newNode = nodeList.getFrontNode();
 					
-					for(int i = 0; i < iIndex; i++)
-					{		
+					for(int i = 0; i < iIndex; i++) {		
 						newNode = newNode.getNextLink();
 						currentElement = newNode.getElement();
 					}				
