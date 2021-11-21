@@ -1,14 +1,9 @@
 package Crime;
 import CustomDataStructures.CustomList;
 
-/*
- * Created By Ronald Lai, 201433999
- */
-
 public class CrimeData {
 	public final static int CRIMES_COMMITED = 8;
 	
-	//Region details
 	private CustomList<CrimeDetails> crimeDetailsList;
 	protected String sRegion;
 	protected CustomList<String> sCrimeTypeList;  
@@ -19,17 +14,14 @@ public class CrimeData {
 	protected int iStartTime;
 	protected int iNumCrimesCommitted;
 	
-	//Each node needs to be aware of what kind of region it is
 	private Boolean isProvince = false;
 	private Boolean isCity = false;
 	private Boolean isSuburb = false;
 	
-	//Pattern variables that show information
 	private Boolean isCrimeOrganised;
 	private String sPatternCrime;
 	private int iPatternTime;
 	
-	//Simple statistics variables
 	private int iTotalCrimes;
 	private int iAverageCrimes;
 	private int iMaxCrimes;
