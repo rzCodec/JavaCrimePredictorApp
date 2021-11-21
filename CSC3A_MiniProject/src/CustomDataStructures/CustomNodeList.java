@@ -3,24 +3,15 @@ package CustomDataStructures;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-/*
- * Created by Ronald Lai, 201433999
- */
-
-public class CustomNodeList<T> implements iNode<T>, Iterable<T>, Cloneable
-{
+public class CustomNodeList<T> implements iNode<T>, Iterable<T>, Cloneable {
 	private CustomNodeList<T> copylist; 
 	private cNode<T> header = null;
 	private cNode<T> trailer = null;
 	private Integer size;
 	private Integer j = 0;
 	
-	/**
-	 * Default Constructor
-	 */
-	
-	public CustomNodeList()
-	{
+
+	public CustomNodeList() {
 		trailer = new cNode<T>(null, null, null);
 		header = new cNode<T>(trailer, null, null); //Set the header's next link to point to the trailer
 		trailer.setPrevLink(header); //Set the trailer's prev link to point to the header.
@@ -32,17 +23,13 @@ public class CustomNodeList<T> implements iNode<T>, Iterable<T>, Cloneable
 	 * @see iNode#add(java.lang.Integer, java.lang.Comparable)
 	 */
 	@Override
-	public void addData(Integer index, T DataType) 
-	{
-		if(index == 0)
-		{
+	public void addData(Integer index, T DataType) {
+		if(index == 0) {
 			addFirst(DataType); //Zero index means add the data to the front of the list
 		}
-		else
-		{
+		else {
 			cNode<T> getNode = getFrontNode(); //Get the front node of the list
-			for(int i = 0; i < (index - 1); i++)
-			{
+			for(int i = 0; i < (index - 1); i++) {
 				getNode = getNode.getNextLink(); //Traverse through the list
 			}
 			
@@ -57,18 +44,14 @@ public class CustomNodeList<T> implements iNode<T>, Iterable<T>, Cloneable
 	 * @see iNode#add(java.lang.Integer, java.lang.Comparable)
 	 */
 	@Override
-	public void addAndReplaceData(Integer index, T DataType)
-	{
-		if(index == 0)
-		{
+	public void addAndReplaceData(Integer index, T DataType) {
+		if(index == 0) {
 			addFirst(DataType); //Zero index means add the data to the front of the list
 			removeAfterNode(header.getNextLink());
 		}
-		else
-		{
-			cNode<T> getNode = getFrontNode(); //Get the front node of the list
-			for(int i = 0; i < (index - 1); i++)
-			{
+		else {
+			cNode<T> getNode = getFrontNode();
+			for(int i = 0; i < (index - 1); i++) {
 				getNode = getNode.getNextLink(); //Traverse through the list
 			}
 			
@@ -83,8 +66,7 @@ public class CustomNodeList<T> implements iNode<T>, Iterable<T>, Cloneable
 	 * @see iNode#add(java.lang.Integer, java.lang.Comparable)
 	 */
 	@Override
-	public cNode<T> addAfterNode(cNode<T> givenNode, T DataType)
-	{
+	public cNode<T> addAfterNode(cNode<T> givenNode, T DataType) {
 		cNode<T> newNode = new cNode<T>(null, null, DataType);
 		cNode<T> nextNode = givenNode.getNextLink();
 			
@@ -102,8 +84,7 @@ public class CustomNodeList<T> implements iNode<T>, Iterable<T>, Cloneable
 	 * @see iNode#add(java.lang.Integer, java.lang.Comparable)
 	 */
 	@Override
-	public cNode<T> addBeforeNode(cNode<T> givenNode, T DataType)
-	{
+	public cNode<T> addBeforeNode(cNode<T> givenNode, T DataType) {
 		cNode<T> newNode = new cNode<T>(null, null, DataType);
 		cNode<T> prevNode = givenNode.getPrevLink();
 		prevNode.setNextLink(newNode);
@@ -119,8 +100,7 @@ public class CustomNodeList<T> implements iNode<T>, Iterable<T>, Cloneable
 	 * @see iNode#returnNode(java.lang.Integer)
 	 */
 	@Override
-	public cNode<T> removeAfterNode(cNode<T> givenNode)
-	{
+	public cNode<T> removeAfterNode(cNode<T> givenNode) {
 		cNode<T> removeNode = givenNode.getNextLink();
 		cNode<T> nextNode = removeNode.getNextLink();
 		givenNode.setNextLink(nextNode);
@@ -134,8 +114,7 @@ public class CustomNodeList<T> implements iNode<T>, Iterable<T>, Cloneable
 	 * @see iNode#addFirst(T)
 	 */
 	@Override
-	public cNode<T> addFirst(T ItemType)
-	{
+	public cNode<T> addFirst(T ItemType) {
 		return addAfterNode(header, ItemType);
 	}
 	
@@ -144,8 +123,7 @@ public class CustomNodeList<T> implements iNode<T>, Iterable<T>, Cloneable
 	 * @see iNode#addFirst(T)
 	 */
 	@Override
-	public cNode<T> addLast(T ItemType)
-	{
+	public cNode<T> addLast(T ItemType) {
 		return addBeforeNode(trailer, ItemType);
 	}
 	
@@ -154,13 +132,10 @@ public class CustomNodeList<T> implements iNode<T>, Iterable<T>, Cloneable
 	 * @see iNode#addFirst(T)
 	 */
 	@Override
-	public cNode<T> searchNode(cNode<T> givenNode)
-	{
+	public cNode<T> searchNode(cNode<T> givenNode) {
 		cNode<T> currentNode = header.getNextLink();
-		while (currentNode != trailer) 
-		{
-			if (currentNode.getElement().equals(givenNode)) 
-			{
+		while (currentNode != trailer) {
+			if (currentNode.getElement().equals(givenNode)) {
 				return currentNode;
 			}
 			currentNode = currentNode.getNextLink();
@@ -168,43 +143,12 @@ public class CustomNodeList<T> implements iNode<T>, Iterable<T>, Cloneable
 		return null;
 	}
 	
-	
 	/** Removes the last node in the array list and returns the data that was removed.
 	 * 
 	 * @see iNode#removeLast()
 	 */
 	@Override
-	public cNode<T> removeLast()
-	{
-		/*
-		T removedElement = null;
-		
-		if(!(isEmpty()))
-		{
-			cNode<T> currentNode = header;
-			while(currentNode.getNextLink() != null)
-			{
-				currentNode = currentNode.getNextLink(); //Traverse through the list to get the last node.
-			}
-			
-			//The current node is null so lets get the node before this one.
-			//Now we can get the element
-			removedElement = currentNode.getPrevLink().getElement();
-			
-			cNode<T> previousNode = currentNode.getPrevLink();
-			currentNode = null;
-			previousNode.setNextLink(trailer);
-			trailer.setPrevLink(previousNode);
-		}
-		else
-		{
-			System.out.println("List is empty, cannot find the last node.");
-		}
-		
-		size--;
-		return removedElement;
-		*/
-		
+	public cNode<T> removeLast() {	
 		return removeBeforeNode(trailer);
 	}
 	
@@ -213,8 +157,7 @@ public class CustomNodeList<T> implements iNode<T>, Iterable<T>, Cloneable
 	 * @see iNode#isEmpty()
 	 */
 	@Override
-	public boolean isEmpty()
-	{
+	public boolean isEmpty() {
 		if(size == 0) return true;
 		else return false;
 	}
@@ -224,10 +167,8 @@ public class CustomNodeList<T> implements iNode<T>, Iterable<T>, Cloneable
 	 * @see iNode#isEmpty()
 	 */
 	@Override
-	public cNode<T> getFrontNode()
-	{
-		if(header.getNextLink() == trailer) 
-		{
+	public cNode<T> getFrontNode() {
+		if(header.getNextLink() == trailer) {
 			System.out.println("List is empty!");
 			System.exit(-1);
 		}
@@ -241,25 +182,20 @@ public class CustomNodeList<T> implements iNode<T>, Iterable<T>, Cloneable
 	 * @see iNode#returnNode(java.lang.Integer)
 	 */
 	@Override
-	public cNode<T> returnNode(Integer iIndex)
-	{
-		if((iIndex == 0) && (iIndex <= size)) 
-		{
+	public cNode<T> returnNode(Integer iIndex) {
+		if((iIndex == 0) && (iIndex <= size)) {
 			return getFrontNode(); //Simply return the first element in the list
 		}
 		else if(iIndex <= size)
 		{
 			cNode<T> newNode = getFrontNode();
-			
-			for(int i = 0; i < iIndex; i++) //Iterate through the list and stop at the index value 
-			{		
+			for(int i = 0; i < iIndex; i++) {		
 				newNode = newNode.getNextLink();
 			}	
 		
 			return newNode;
 		}
-		else
-		{
+		else {
 			System.out.println("The index specified is greater than the list size!");
 			return null;			
 		}
@@ -270,8 +206,7 @@ public class CustomNodeList<T> implements iNode<T>, Iterable<T>, Cloneable
 	 * @see java.lang.Iterable#iterator()
 	 */
 	@Override
-	public cNode<T> removeBeforeNode(cNode<T> givenNode)
-	{
+	public cNode<T> removeBeforeNode(cNode<T> givenNode) {
 		cNode<T> removeNode = givenNode.getPrevLink();
 		cNode<T> prevNode = removeNode.getPrevLink();
 		givenNode.setPrevLink(prevNode);
@@ -289,20 +224,16 @@ public class CustomNodeList<T> implements iNode<T>, Iterable<T>, Cloneable
 	 * @see java.lang.Iterable#iterator()
 	 */
 	@Override
-	public Iterator<T> iterator()
-	{
-		Iterator<T> iterator = new Iterator<T>(){
-			
+	public Iterator<T> iterator() {
+		Iterator<T> iterator = new Iterator<T>() {
 			private Integer iIndex = 0;
-			
-
+		
 			/**
 			 * Check if there is another element in the list
 			 * @see java.util.Iterator#hasNext()
 			 */
 			@Override
-			public boolean hasNext() 
-			{
+			public boolean hasNext() {
 				if(!(isEmpty())) //If the list contains something...
 				{
 					if(iIndex < size) return true; //If the current is more than the size of the list, it does not have a next element
@@ -317,83 +248,68 @@ public class CustomNodeList<T> implements iNode<T>, Iterable<T>, Cloneable
 			 * @see java.util.Iterator#next()
 			 */
 			@Override
-			public T next() 
-			{
-				if(iIndex == 0) 
-				{
+			public T next() {
+				if(iIndex == 0) {
 					//System.out.println("Index # " + iIndex);
 					iIndex += 1;
 					return getFrontNode().getElement();
 				} 
-				else
-				{
+				else {
 					//System.out.println("Index # " + iIndex);
 					T currentElement = null;
 					cNode<T> newNode = getFrontNode();
 					
-					for(int i = 0; i < iIndex; i++)
-					{		
+					for(int i = 0; i < iIndex; i++) {		
 						newNode = newNode.getNextLink();
 						currentElement = newNode.getElement();
 					}				
 					iIndex += 1;
 					return currentElement;
 				}	
-			} // end of next
-			
-		}; // end of Iterator<T>()
-		
+			}
+		}; 
 		return iterator;
 	}
-		
-	//===================== Accessor and Mutator methods ===========================
 	
 	/**
 	 * @return returns the header
 	 */
-	public cNode<T> getHeader() 
-	{
+	public cNode<T> getHeader() {
 		return header;
 	}
 
 	/**
 	 * @param header, set the value of the header
 	 */
-	public void setHeader(cNode<T> header) 
-	{
+	public void setHeader(cNode<T> header) {
 		this.header = header;
 	}
 
 	/**
 	 * @return returns the trailer
 	 */
-	public cNode<T> getTrailer() 
-	{
+	public cNode<T> getTrailer() {
 		return trailer;
 	}
 
 	/**
 	 * @param trailer, set the value of the trailer
 	 */
-	public void setTrailer(cNode<T> trailer) 
-	{
+	public void setTrailer(cNode<T> trailer) {
 		this.trailer = trailer;
 	}
 
 	/**
 	 * @return returns the size of the array list which is the number of elements inside it
 	 */
-	public Integer getSize() 
-	{
+	public Integer getSize() {
 		return size;
 	}
 
 	/**
 	 * @param size, sets the size of the array list
 	 */
-	public void setSize(int size) 
-	{
+	public void setSize(int size) {
 		this.size = size;
 	}
-	
-} //end of class
+} 
