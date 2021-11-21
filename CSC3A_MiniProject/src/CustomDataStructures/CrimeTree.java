@@ -1,15 +1,9 @@
 package CustomDataStructures;
 import java.util.Random;
-
 import javax.swing.JTextArea;
-
 import Crime.*;
 
-/*
- * Created By Ronald Lai, 201433999
- */
-public class CrimeTree 
-{
+public class CrimeTree {
 	private int iNodes = 0;
 	private int iSuburbNodes = 0;
 	private int iNumCities = 0;
@@ -25,7 +19,7 @@ public class CrimeTree
 		this.iNumCities = iNumCities;
 		this.iArySuburbs = iArySuburbs;
 	
-		tempList.addArrayElements(tempAry); //A temporary list to hold no crimes for the moment instead of holding null values
+		tempList.addArrayElements(tempAry);
 		
 		CrimeData provinceDataObj = new CrimeData(sRegionName, tempList, "", "", "", 0, 0);
 		rootProvinceNode = new Node(null, null, provinceDataObj);
@@ -33,16 +27,14 @@ public class CrimeTree
 		iNodes += 1;
 		
 		//Create the cities for the current province
-		for(int i = 0; i < iNumCities; i++)
-		{
+		for(int i = 0; i < iNumCities; i++){
 			CrimeData cityDataObj = new CrimeData("City #" + i, tempList, "", "", "", i, i); //Set each city to its parent node, which is the province
 			Node cityNode = new Node(rootProvinceNode, null, cityDataObj);
 			cityNodeList.addLast(cityNode);
 			iNodes += 1;
 		}
 		
-		for(int i = 0; i < iNumCities; i++) //For each city...
-		{
+		for(int i = 0; i < iNumCities; i++) {
 			CustomList<Node> suburbNodeList = new CustomList<Node>();	
 			for(int k = 0; k < iArySuburbs[i]; k++)
 			{
@@ -63,37 +55,30 @@ public class CrimeTree
 			//This creates a "downward" reference; each parent now knows its children
 			//Now I have created a double ended reference; from the children to its parent and its parent to its children.
 			cityNodeList.get(i).setChildrenNodeList(suburbNodeList);
-						
-			//Now that the Tree has been created, I populate the entire Tree with randomly generated data
 		}
 		
-		//I apply the same concept here
 		rootProvinceNode.setChildrenNodeList(cityNodeList);
 		rootProvinceNode.getCrimeDataObj().setIsProvince(true);
 	}
 	
 	//Populates the tree with randomized crime data
-	public void populateTree() 
-	{
+	public void populateTree() {
 		CustomList<Integer> intList = new CustomList<Integer>();
 		CustomList<Node> cityNodeList = rootProvinceNode.getChildrenNodeList();
 		DataGeneration dgObj = new DataGeneration();
 			
-		for(Node cityNode : cityNodeList)
-		{			
+		for(Node cityNode : cityNodeList) {			
 			dgObj.generateRandomDate();	
 			CrimeData cdObj = new CrimeData(dgObj.generateRandomRegion("City"), tempList, dgObj.getsDay(), dgObj.getsMonth(), dgObj.getsDate(), dgObj.getiStartTime(), dgObj.getiNumCrimesCommitted());
 			cdObj.setIsCity(true);
 			cityNode.setCrimeDataObj(cdObj);
 			
 			CustomList<Node> suburbNodeList = cityNode.getChildrenNodeList();
-			for(Node suburbNode : suburbNodeList)
-			{
+			for(Node suburbNode : suburbNodeList) {
 				dgObj.generateRandomDate();	
 				CustomList<String> tempList = new CustomList<String>();
 				
-				for(int i = 0; i < dgObj.getiNumCrimesCommitted(); i++)
-				{			
+				for(int i = 0; i < dgObj.getiNumCrimesCommitted(); i++)	{			
 					tempList.addFirst(dgObj.generateRandomCrime());
 				}		
 				intList.addLast(dgObj.getiNumCrimesCommitted());
@@ -102,8 +87,8 @@ public class CrimeTree
 				cdObj = new CrimeData(dgObj.generateRandomRegion("Suburb"), tempList, dgObj.getsDay(), dgObj.getsMonth(), dgObj.getsDate(), dgObj.getiStartTime(), dgObj.getiNumCrimesCommitted());				
 				cdObj.makeCrimeList();
 				suburbNode.setCrimeDataObj(cdObj);
-			} //end for each suburb loop
-		}//end for each city loop	
+			} 
+		}
 	}
 	
 	//A function to calculate the different statistics
@@ -112,7 +97,6 @@ public class CrimeTree
 		int iTotalNumCrimes = 0;
 		int iGrandTotal = 0;
 		CustomList<Node> cityNodeList = rootProvinceNode.getChildrenNodeList();
-		//CustomList<Integer> numCrimeList = new CustomList<Integer>();
 		int iMax = 0; 
 		int iMin = 0;
 		int iCrimes = 0;
@@ -123,9 +107,8 @@ public class CrimeTree
 			iMax = suburbList.get(0).getCrimeDataObj().getiNumCrimesCommitted();
 			for(Node suburbNode : suburbList)
 			{
-				iTotalNumCrimes += suburbNode.getCrimeDataObj().getsCrimeTypeList().size(); //Total the number of crimes
+				iTotalNumCrimes += suburbNode.getCrimeDataObj().getsCrimeTypeList().size();
 				cityNode.getCrimeDataObj().setiTotalCrimes(iTotalNumCrimes); //Set the total crimes per city
-				//numCrimeList.addLast(suburbNode.getCrimeDataObj().getiNumCrimesCommitted()); //Add the number of crimes to
 				suburbNode.getCrimeDataObj().setiTotalCrimes(suburbNode.getCrimeDataObj().getiNumCrimesCommitted());
 				String sCrimeRegion = suburbNode.getCrimeDataObj().getsRegion(); //Get the region name with the highest crime
 				
@@ -138,10 +121,9 @@ public class CrimeTree
 					suburbNode.getNodeParent().getCrimeDataObj().setsMaxCrimeRegion(sCrimeRegion);
 				}
 			}
-			//Calcuate the average crimes per city by diving the total crimes across all cities and suburbs by the # of citites
 			int iAvgCrimesPerCity = calcAvgCrimes(iTotalNumCrimes, cityNode.getChildrenNodeList().size());
 			cityNode.getCrimeDataObj().setiAverageCrimes(iAvgCrimesPerCity);
-			iGrandTotal += cityNode.getCrimeDataObj().getiTotalCrimes(); //The total crimes that occurred for Gauteng
+			iGrandTotal += cityNode.getCrimeDataObj().getiTotalCrimes();
 			iTotalNumCrimes = 0;
 		}
 		
@@ -149,15 +131,11 @@ public class CrimeTree
 		int iCityCrime = 0;
 		String sMaxCity = "";
 		
-		for(Node cityNode : rootProvinceNode.getChildrenNodeList())
-		{
+		for(Node cityNode : rootProvinceNode.getChildrenNodeList()) {
 			iCityCrime = cityNode.getCrimeDataObj().getiTotalCrimes();
-			//System.out.println("# Crimes" + iCityCrime);
-			if(iMaxCities <= iCityCrime)
-			{
+			if(iMaxCities <= iCityCrime) {
 				iMaxCities = cityNode.getCrimeDataObj().getiTotalCrimes();
 				sMaxCity = cityNode.getCrimeDataObj().getsRegion();
-				//System.out.println("City " + sMaxCity);
 			}
 		}
 	
@@ -169,8 +147,7 @@ public class CrimeTree
 		rootProvinceNode.setChildrenNodeList(cityNodeList);
 	}
 	
-	private int calcAvgCrime(int iTotalCrimes, int iCrimesPerRegion)
-	{
+	private int calcAvgCrime(int iTotalCrimes, int iCrimesPerRegion) {
 		return iTotalCrimes / iCrimesPerRegion;
 	}
 	
@@ -180,14 +157,10 @@ public class CrimeTree
 	 * @param sSuburb - The suburb's name
 	 * @return CrimeData - The node to be returned, a toString method displays the details
 	 */
-    public CrimeData searchTreeForSuburb(String sSuburb)
-    {
-    	for(Node cityNode : rootProvinceNode.getChildrenNodeList())
-    	{
-    		for(Node suburbNode : cityNode.getChildrenNodeList())
-        	{
-        		if(suburbNode.getCrimeDataObj().getsRegion().equals(sSuburb))
-        		{
+    public CrimeData searchTreeForSuburb(String sSuburb) {
+    	for(Node cityNode : rootProvinceNode.getChildrenNodeList()) {
+    		for(Node suburbNode : cityNode.getChildrenNodeList()) {
+        		if(suburbNode.getCrimeDataObj().getsRegion().equals(sSuburb)) {
         			return suburbNode.getCrimeDataObj();
         		}
         	}	
@@ -259,11 +232,10 @@ public class CrimeTree
     			suburbTimeList.addFirst(iCommonTime);
     			
     			//Get each crime type from the suburb
-    			for(String sCrime : suburbNode.getCrimeDataObj().getsCrimeTypeList())
-    			{
+    			for(String sCrime : suburbNode.getCrimeDataObj().getsCrimeTypeList()) {
     				crimeList.addFirst(sCrime);
-    			} // end for each crime type
-    		} // end for each suburb node
+    			} 
+    		} 
     		
     		int iCityAvgTime = crimePatternObj.calcAvgTime(suburbTimeList);
 			double cityStdDeviation = crimePatternObj.calcStandardDeviation(suburbTimeList, iCityAvgTime);
@@ -272,10 +244,9 @@ public class CrimeTree
 			cityNode.getCrimeDataObj().setsPatternCrime(crimePatternObj.findCrimePattern(iCommonTime));
 			cityNode.getCrimeDataObj().setIsCrimeOrganised(crimePatternObj.isOrganisedCrime(cityStdDeviation, iCityAvgTime));
 			
-    	} // end for each city node
+    	} 
     	
-    	if(atDark(iNightCount, iDayCount) == true)
-    	{
+    	if(atDark(iNightCount, iDayCount) == true) {
     		txtStatsArea.append("Crimes likely occur at night, please be careful, especially when going home! \n\n");
     	}
     	else txtStatsArea.append("Crimes usually occur during the day, be vigilant! \n\n");
@@ -289,14 +260,11 @@ public class CrimeTree
 			freqCountList.addFirst(new CrimeFrequency(sCrimeType, 0));
 		}
 		
-		//Now I compare each crime that has occurred with the unique crimes stored
-		//Now I can determine which crime has occurred the most
-		for(CrimeFrequency fc : freqCountList)
-		{
-			for(String currCrime : crimeList)
-			{
-				if(currCrime.equals(fc.getsCrimeType()))
-				{
+		//Compare each crime that has occurred with the unique crimes stored
+		//Determines which crime has occurred the most
+		for(CrimeFrequency fc : freqCountList) {
+			for(String currCrime : crimeList) {
+				if(currCrime.equals(fc.getsCrimeType())) {
 					count += 1;
 					fc.setiFreq(count);
 				}
@@ -308,15 +276,12 @@ public class CrimeTree
 		int iFreqValue = 0;
 		String sCrimeName = "";
 		
-		for(CrimeFrequency fc : freqCountList)
-		{
+		for(CrimeFrequency fc : freqCountList) {
 			iFreqValue = fc.getiFreq();
-			if(iMaxFreq <= iFreqValue)
-			{
+			if(iMaxFreq <= iFreqValue) {
 				iMaxFreq = iFreqValue;
 				sCrimeName = fc.getsCrimeType();
 			}
-			//System.out.println(fc.toString());
 			txtStatsArea.append(fc.toString());
 		}
 		
@@ -334,10 +299,8 @@ public class CrimeTree
 		txtStatsArea.append("\nCrime Frequency for Gauteng \n\n");
 		detFreq(txtStatsArea);	
 		
-		for(Node cityNode : rootProvinceNode.getChildrenNodeList())
-		{
-			if(cityNode != null)
-			{
+		for(Node cityNode : rootProvinceNode.getChildrenNodeList()) {
+			if(cityNode != null) {
 				txtStatsArea.append("\n\n === City === " + cityNode.getCrimeDataObj().toString() + "Total Number of Suburbs :" + cityNode.getChildrenNodeList().size() + "\n");
 				txtStatsArea.append(" Average number of crimes per suburb is : " + cityNode.getCrimeDataObj().getiAverageCrimes() + "\n \n");
 				txtStatsArea.append("\n");
@@ -348,7 +311,6 @@ public class CrimeTree
 				}
 				txtStatsArea.append("\n");
 			}
-		
 		}
 		txtStatsArea.setCaretPosition(0);
 	}
@@ -359,50 +321,39 @@ public class CrimeTree
 	 * @param iNum
 	 * @return
 	 */
-	private int calcAvgCrimes(int iTotCrimes, int iNum)
-	{
+	private int calcAvgCrimes(int iTotCrimes, int iNum){
 		return iTotCrimes / iNum;
 	}
 	
-    //Getters and Setters
-	public int getiNodes() 
-	{
+	public int getiNodes() {
 		return iNodes;
 	}
 
-	public void setiNodes(int iNodes)
-	{
+	public void setiNodes(int iNodes) {
 		this.iNodes = iNodes;
 	}
 
-	public int getiNumCities() 
-	{
+	public int getiNumCities() {
 		return iNumCities;
 	}
 
-	public void setiNumCities(int iNumCities) 
-	{
+	public void setiNumCities(int iNumCities) {
 		this.iNumCities = iNumCities;
 	}
 
-	public int[] getiArySuburbs() 
-	{
+	public int[] getiArySuburbs() {
 		return iArySuburbs;
 	}
 
-	public void setiArySuburbs(int[] iArySuburbs) 
-	{
+	public void setiArySuburbs(int[] iArySuburbs) {
 		this.iArySuburbs = iArySuburbs;
 	}
 
-	public Node getRootProvinceNode() 
-	{
+	public Node getRootProvinceNode() {
 		return rootProvinceNode;
 	}
 
-	public void setRootProvinceNode(Node rootProvinceNode) 
-	{
+	public void setRootProvinceNode(Node rootProvinceNode) {
 		this.rootProvinceNode = rootProvinceNode;
 	}
-
-} //end of class
+}
